@@ -1,0 +1,27 @@
+- 노드 버전 관리 프로그램으로 nvm 보다는 tj/n 이란 것을 추천함. ( tj/n ← 맥만 사용할 수 있음;)
+
+- formatting : 미적인 형식
+Linting : best practice, 지키면 좋은 형식, 에러 예방
+서로 비슷하지만 조금 다름
+
+- npm --save : 
+--save 옵션은 package.json의 dependencies 항목에 모듈을 추가한다는 뜻.
+하지만 npm5 부터는 --save를 기본 옵션으로 적용하게 됨. 즉, --save를 사용하지 않아도 dependencies 항목에 추가가 됨.
+
+- npm --save-dev :
+이건 package.json의 devDepndencies 항목에 모듈을 추가한다는 뜻.
+devDepndencies는 패키지 구동에 필요한 것이 아닌 개발 단계에서 필요한 것.
+
+- package.json의 기본 필드들 (name, version, description, main, author, license)은 패키지로서 배포할 때 필요한 정보들이다.
+즉, node는 프로젝트 폴더일지라도 기본적으로 패키지로 본다는 것.
+
+- scripts는 프로젝트를 관리하면서 자주 사용하게 되는 스크립트들을 간편하게 호출하기 위해서 존재함(?)
+[ npm run 키값 ] 과 같은 식으로 호출
+
+- package.json에 dependencies 필드에는 ^2.2.1( 2.1.1 버전 이상 )과 같이 모호한 표기가 되어있고, 로컬에 설치되는 버전은 위와 같지 않을 수 있다.
+package-lock.json 파일에는 실제로 설치된 버전이 명시되어있고, npm도 이것을 보고 해당 버전에 맞는 패키지를 설치 하려고 함.
+때문에, git push 시 package-lock.json를 같이 push해 주어야 공동 작업자간에 버전이 맞지 않는 문제를 해결할 수 있음
+
+- node_modules/.bin은 실행할 수 있는 바이너리 파일이 저장되어있음
+
+- .vscode/settings.json은 해당 프로젝트 폴더에 적용되는 세팅들을 모아둔 것
