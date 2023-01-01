@@ -25,3 +25,6 @@ package-lock.json 파일에는 실제로 설치된 버전이 명시되어있고,
 - node_modules/.bin은 실행할 수 있는 바이너리 파일이 저장되어있음
 
 - .vscode/settings.json은 해당 프로젝트 폴더에 적용되는 세팅들을 모아둔 것
+
+- (npm install —save-dev) @types/node :
+해당 패키지에는 노드에서 주로 사용되는 객체들에 대한 타입 정보들이 들어있음
