@@ -1,0 +1,40 @@
+- prototype chain : object에서 자료 뽑을 때 일어나는 일
+1. 해당 객체가 자료를 갖고 있으면 그거 출력
+2. 없으면 부모prototype 뒤짐
+3. 부모도 없으면 조부모님까지 뒤짐
+4. 상위 프로토타입이 없을 때까지 뒤짐
+
+- let 변수명 = new 프로토타입명(arg1, arg2 … )
+⇒ 변수 안에 해당 프로토타입의 자식을 만들어서 넣음
+ex) var arr = new Array(5,2,1)
+
+- Array.prototype.함수1 = function(){}
+⇒ 이런 식으로 함수를 대입하면 모든 배열에서 해당 함수를 사용 가능
+(프로토타입 직접 수정 가능)
+
+- 호이스팅을 통해 선언이 먼저 될 때
+함수는 선언만 해도 작동 될 수 있기 때문에 함수가 어느 위치에 있든 실행 가능
+var 변수는 선언 이후 초기화도 되어야 하기 때문에 선언문보다 위에서 변수를 사용하면 undefined가 반환됨
+
+- 함수 스코프의 2가지 종류
+1. Dynamic scope : 함수 호출 위치에 따라 스코프 결정
+2. **Lexical scope**, Static scope : 함수 선언 위치에 따라 스코프 결정
+(JS를 비롯한 대부분의 프로그래밍 언어는 렉시컬 스코프를 채택)
+
+- JS 스코프 종류
+1. 함수 스코프 (var 안 쓰므로 사용안함)
+2. 블록 스코프 (let, const)
+3. 렉시컬 스코프 (스코프는 선언 시 생성된다!)
+
+- 렉시컬 스코프 예시
+var name = 'kim';
+function log() {
+  console.log(name);
+}
+
+function wrapper() {
+  var name = 'park';
+  log();
+}
+wrapper(); // log 선언 시 가까운 스코프의 name은 kim이였음으로 park이 아닌 kim 출력!
+
