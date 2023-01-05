@@ -1,3 +1,22 @@
+// @ts-check
+/* eslint-disable no-restricted-syntax */
+// 👆 설정한 javascript 일부 기능 제한?
+
+/**
+ * // 👇 솔리디티의 구조체와 비슷한 것 선언?
+ * @typedef Person
+ * 
+ * @property {number} age
+ * // 👆 key=age, value에는 숫자가 들어가는 프로퍼티 추가?
+ * @property {string} city
+ * //                           👇 대괄호 : 해당 프로퍼티는 있을 수도 있고 없을 수도 있다?
+ * @property {string | string[]} [pet]
+ * //                👆 value에 string 또는 string의 배열이 들어갈 수 있다
+ */
+
+
+/** @type {Person[]} */
+//         👆 person을 담는 배열 선언
 const people = [
   {
     age: 20,
@@ -37,6 +56,7 @@ const people = [
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡA문제의 고전적인 풀이
 function solveA() {
+  /** @type {string[]} */
   const cities = [];
   //                👇 배열 순환 (객체는 in)
   for (const person of people) {
@@ -64,4 +84,12 @@ function solveAModern() {
 }
 console.log('solveAModern : ', solveAModern());
 
-// ㅡㅡㅡㅡㅡㅡㅡㅡ
+// ㅡㅡㅡㅡㅡㅡㅡㅡB문제 풀이
+/** @typedef {Object.<string, Object.<string,number>>}  PetsOfCities */
+// 👆 객체 타입 설정?, Object.<(key타입), (value타입)> (타입이름)
+
+function solveB(){
+  /** @type PetsOfCities */
+  const result = {}
+  // 구조분해할당 시 콜론으로 이름을 바꿔서 저장 가능
+}
