@@ -47,6 +47,7 @@ const people = [
     pet: 'dog',
   },
 ];
+
 /**
  * 문제
  *
@@ -55,6 +56,7 @@ const people = [
  */
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡA문제의 고전적인 풀이
+
 function solveA() {
   /** @type {string[]} */
   const cities = [];
@@ -70,24 +72,23 @@ function solveA() {
 
   return cities;
 }
-console.log('solveA : ', solveA());
+
 
 // ㅡㅡㅡㅡㅡㅡA문제의 현대적인? 풀이 (JS유틸리티 적극 사용, 보기 편하고 중첩이 없어서 사고하기가 편하다(mutation))
 function solveAModern() {
   //     👇 조건에 맞는 요소들만을 묶어서 배열로 리턴하는 메소드
   const cities2 = people
-    .filter(({ age }) => age < 30)
-    //      👇👆 object destructuring
-    .map(({ city }) => city);
+  .filter(({ age }) => age < 30)
+  //      👇👆 object destructuring
+  .map(({ city }) => city);
   const set = new Set(cities2); // 👈 cities2 배열을 집합으로 만듬 -> 중복된 원소 제거
   return Array.from(set); // 👈 집합을 다시 배열로 되돌려서 반환
 }
-console.log('solveAModern : ', solveAModern());
+
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡB문제 고전 풀이
 /** @typedef {Object.<string, Object.<string,number>>}  PetsOfCities */
 // 👆 객체 타입 설정?, Object.<(key타입), (value타입)> (타입이름)
-
 function solveB(){
   /** @type {PetsOfCities} */
   //        👆 PetOfCities들을 담는 객체
@@ -116,28 +117,28 @@ function solveB(){
   }
   return result
 }
-console.log('solveB : ', solveB());
-
 
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡB문제 현대 풀이 (내 풀이)
 // +) 할당할 때가 아니면 eslint에서는 삼항연산자 사용을 비추함?
 function solveBModern() {
   /** @type {PetsOfCities} */
-  const result = people.reduce((acc,cur)=>{
-    if(cur.pet){
+  const result = people.reduce((acc,{city, pet})=>{
+    if(pet){
 
       // city 프로퍼티에 객체 타입 정의해주기
       //  👇 string literal 때문에 나는 오류인가?
-      acc[cur.city] = acc[cur.city] ?? {} 
+      acc[city] = acc[city] ?? {} 
       //                            👆 좌항이 falsy면 우항 값으로 치환
 
       // 도시별로 동물 수 정리하기
-      if(typeof cur.pet === 'string'){
-        acc[cur.city][cur.pet] = acc[cur.city][cur.pet] ? acc[cur.city][cur.pet] += 1 : 1
-      }else if(typeof cur.pet === 'object'){
-        cur.pet.forEach(pet=>{//   👆 array를 typeof하면 object가 나온다
-          acc[cur.city][pet] = acc[cur.city][pet] ? acc[cur.city][pet] += 1 : 1
+      if(typeof pet === 'string'){
+        acc[city][pet] = acc[city][pet] ? acc[city][pet] += 1 : 1
+        
+      }else if(typeof pet === 'object'){
+        //                     👆 array를 typeof하면 object가 나온다
+        pet.forEach(pet=>{
+          acc[city][pet] = acc[city][pet] ? acc[city][pet] += 1 : 1
         })
       }
     }
@@ -145,7 +146,6 @@ function solveBModern() {
   },{})
   return result
 }
-console.log('mySolveBModern : ', solveBModern())
 
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡB문제 현대 풀이 (강사님 풀이)
@@ -153,13 +153,29 @@ console.log('mySolveBModern : ', solveBModern())
 function solveBModern() {
   return people.map(({ pet: petOrPets, city })=>{
     const pets = (typeof petOrPets === 'string' ? [petOrPets] : petOrPets) || []
-
+    return{ city, pets }
+  })
+  .flatMap(({ city, pets }) => pets.map(pet => [city, pet]))
+  .reduce((/** @type {PetsOfCities} */ acc, [city, pet]) => {
     return{
-      city,
-      pets,
+      ...acc,
+      [city]: {
+        ...acc[city],
+        [pet]: (acc[city]?.[pet] || 0) + 1,
+        //               👆 optional chaining : 좌항이 undefined이면 undefined를 리턴, 오류 방지
+      },
     }
-  }).flatMap(({ city, pets }) => pets.map(pet => [city, pet]))
+    
+  },{})
 }
+
+
+console.log('solveA : ', solveA());
+console.log('solveAModern : ', solveAModern());
+
+console.log('solveB : ', solveB());
+console.log('mySolveBModern : ', solveBModern())
+console.log('solveBModern : ', solveBModern())
 
 
 // flat의 사용
