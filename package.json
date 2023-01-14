@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "echo \"Hello world?\" "
+    "server": "nodemon studies/CH05-RESTful_API_without_framework/main.js"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
