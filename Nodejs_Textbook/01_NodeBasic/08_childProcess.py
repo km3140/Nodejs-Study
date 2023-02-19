@@ -1,0 +1,1 @@
+print('hello python') // 대충 복잡한 연산
