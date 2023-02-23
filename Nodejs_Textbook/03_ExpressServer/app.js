@@ -4,6 +4,8 @@ const morgan = require('morgan');
 // 👆 요청, 응답에 대한 정보를 기록하는 미들웨어
 const cookieParser = require('cookie-parser');
 // 👆 쿠키 파싱 미들웨어
+const session = require('express-session')
+// 👆 요청마다 유저의 저장공간을 만들어준다
 
 const app = express();
 // 👆 익스프레스가 코드를 줄여준다
@@ -25,6 +27,16 @@ app.use('/', express.static(__dirname, 'public-3140'));
 
 app.use(cookieParser('pangyoelonpassword'));
 //                     👆 해당 키로 쿠키를 암호화 가능
+
+app.use(session{
+  resave: false,
+  saveUninitialized: false,
+  secret: 'pangyoelonpassword',
+  cookie: {
+    httpOnly: true, // JS를 이용한 공격을 방지
+  },
+  // name: 'connect.sid'
+})
 
 app.use(express.json()); // 👈 클라이언트에서 json을 보냈을 때 파싱해서 req.body로 넣어줌
 app.use(express.urlencoded({ extended: true })); // 👈 클라이언트에서 form submit할 때 urlencoded파싱해서 req.body로 넣어줌
